@@ -28,6 +28,7 @@ public class MayınTarlası {
 //    }
 
     public void  setMines( int bayrak) {
+        System.out.println("deneme commit");
 
         Random randomMines = new Random();
 
