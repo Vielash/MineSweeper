@@ -11,6 +11,9 @@ public class MayınTarlası {
     Random randomMines = new Random();
     String[][] hiddenMatris = new String[10][10];
     String[][] visibleMatris = new String[10][10];
+
+    int [] xAxisMine = new int[9];
+    int [] yAxisMine = new int[9];
     boolean flag = true;
 
 
@@ -20,7 +23,7 @@ public class MayınTarlası {
 //        while(flag) {
 //            showGame();
 //            playMove();
-//            if (checkWin() = 1) {
+//            if (checkWin()) {
 //                System.out.println("*************************WIN***************************");
 //                break;
 //            }
@@ -28,7 +31,6 @@ public class MayınTarlası {
 //    }
 
     public void  setMines( int bayrak) {
-        System.out.println("deneme commit");
 
         Random randomMines = new Random();
 
@@ -63,6 +65,7 @@ public class MayınTarlası {
                 }
                 hiddenMatris[xAxis][yAxis] = "* ";
             }
+            hiddenMatrisNumbers();
 
             return;
         }
@@ -115,7 +118,7 @@ public class MayınTarlası {
             case 2:
                 visibleMatris[xAxisInput][yAxisInput] = "  ";
                 checkHidden();
-                fixVisible();
+                //fixVisible();
                 break;
             case 3:
                 if(visibleMatris[xAxisInput][yAxisInput] != "? ") {
@@ -129,9 +132,33 @@ public class MayınTarlası {
 
     }
 
-    public void checkHidden() {
+    public void hiddenMatrisNumbers() {
+        int i = 0;
+        for(int hiddenLine = 1; hiddenLine < 10; hiddenLine++) {
+            for(int hiddenColumn = 1; hiddenColumn < 10; hiddenColumn++) {
+                if(hiddenMatris[hiddenLine][hiddenColumn] == "* ") {
+                    xAxisMine[i] = hiddenLine;
+                    yAxisMine[i] = hiddenColumn;
+                    i++;
+                }
+            }
+        }
 
+        for(int hiddenLine = 1; hiddenLine < 10; hiddenLine++) {
+            for(int hiddenColumn = 1; hiddenColumn < 10; hiddenColumn++) {
+                int numberCount = 0;
+                for(int j = 0; j < 9; j++) {
+                    if(((hiddenLine - xAxisMine[j] < 2) && (hiddenLine - xAxisMine[j] > -2)) && ((hiddenColumn - yAxisMine[j] < 2) && (hiddenLine - yAxisMine[j] > -2))) {
+                         numberCount++;
+                         if(j == 8) {
+                             String s = String.valueOf(numberCount);
+                             hiddenMatris[hiddenLine][hiddenColumn] = s + " ";
+                         }
 
+                    }
+                }
+            }
+        }
     }
 
 }
