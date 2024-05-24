@@ -12,23 +12,25 @@ public class MayınTarlası {
     String[][] hiddenMatris = new String[10][10];
     String[][] visibleMatris = new String[10][10];
 
-    int [] xAxisMine = new int[9];
-    int [] yAxisMine = new int[9];
+    int [] xAxisMine = new int[10];
+    int [] yAxisMine = new int[10];
     boolean flag = true;
 
 
-//    public void startGame() {
-//        System.out.println("**************************MINESWAPPER*****************************");
-//        setMines(1);
-//        while(flag) {
-//            showGame();
-//            playMove();
-//            if (checkWin()) {
-//                System.out.println("*************************WIN***************************");
-//                break;
-//            }
-//        }
-//    }
+    public void startGame() {
+        System.out.println("**************************MINESWAPPER*****************************");
+        setMines(1);
+        while(flag) {
+            showGame();
+            playMove();
+            if (checkWin()) {
+                System.out.println("************************* YOU LOSE ***************************");
+
+                break;
+            }
+
+        }
+    }
 
     public void  setMines( int bayrak) {
 
@@ -116,8 +118,7 @@ public class MayınTarlası {
                 visibleMatris[xAxisInput][yAxisInput] = "? ";
                 break;
             case 2:
-                visibleMatris[xAxisInput][yAxisInput] = "  ";
-                checkHidden();
+                checkHidden(xAxisInput,yAxisInput);
                 //fixVisible();
                 break;
             case 3:
@@ -147,13 +148,11 @@ public class MayınTarlası {
         for(int hiddenLine = 1; hiddenLine < 10; hiddenLine++) {
             for(int hiddenColumn = 1; hiddenColumn < 10; hiddenColumn++) {
                 int numberCount = 0;
-                for(int j = 0; j < 9; j++) {
+                for(int j = 0; j < 10; j++) {
                     if(((hiddenLine - xAxisMine[j] < 2) && (hiddenLine - xAxisMine[j] > -2)) && ((hiddenColumn - yAxisMine[j] < 2) && (hiddenLine - yAxisMine[j] > -2))) {
                          numberCount++;
-                         if(j == 8) {
-                             String s = String.valueOf(numberCount);
-                             hiddenMatris[hiddenLine][hiddenColumn] = s + " ";
-                         }
+                         String s = String.valueOf(numberCount);
+                         hiddenMatris[hiddenLine][hiddenColumn] = s + " ";
 
                     }
                 }
@@ -161,7 +160,28 @@ public class MayınTarlası {
         }
     }
 
+    public boolean checkWin() {
+        int mineCount = 0;
+        boolean loseFlag = false;
+        for (int i = 0; i < 10 ; i++) {
+            if("* ".equals(hiddenMatris[xAxisMine[i]][yAxisMine[i]])) {
+                mineCount++;
+            }
+        }
+        if(mineCount != 10) {
+            loseFlag = true;
+        }
+        return loseFlag;
+    }
+
+    public void checkHidden(int xAxis, int yAxis) {
+    }
+
+
+
 }
+
+
 
 
 

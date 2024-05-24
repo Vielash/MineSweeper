@@ -12,8 +12,8 @@ public class MayınTarlasıTest {
         MayınTarlası m = new MayınTarlası();
 
         m.setMines(1);
-
         m.showGame();
+
 
 
 
