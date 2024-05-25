@@ -1,6 +1,7 @@
 package Oyun;
 
 
+import java.util.Arrays;
 
 public class MayınTarlasıTest {
 
@@ -11,8 +12,18 @@ public class MayınTarlasıTest {
 
         MayınTarlası m = new MayınTarlası();
 
-        m.setMines(1);
-        m.showGame();
+
+
+
+
+//        for (int i = 0; i < 10 ; i++) {
+//            for (int j = 0; j < 10 ; j++) {
+//                System.out.printf(m.hiddenMatris[i][j]);
+//            }
+//            System.out.println("");
+//        }
+        m.startGame();
+
 
 
 
