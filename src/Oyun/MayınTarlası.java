@@ -14,22 +14,60 @@ public class MayınTarlası {
 
     int [] xAxisMine = new int[10];
     int [] yAxisMine = new int[10];
-    boolean flag = true;
+    boolean mainFlag = true;
 
 
     public void startGame() {
         System.out.println("**************************MINESWAPPER*****************************");
         setMines(1);
-        while(flag) {
+        while(mainFlag) {
             showGame();
             playMove();
             if (checkWin()) {
                 System.out.println("************************* YOU LOSE ***************************");
-
                 break;
             }
+        }
+        if(secondCheckWin() == false) {
+            System.out.println("************************** YOU WIN **************************");
 
         }
+
+
+    }
+
+    public boolean checkWin() {
+        int mineCount = 0;
+        boolean loseFlag = false;
+        for (int i = 0; i < 10 ; i++) {
+            if("* ".equals(hiddenMatris[yAxisMine[i]][xAxisMine[i]])) {
+                mineCount++;
+            }
+        }
+        if(mineCount != 10) {
+            loseFlag = true;
+        }
+        return loseFlag;
+    }
+    public boolean secondCheckWin() {
+        int minusCount = 0;
+        for(int visibleLine = 1; visibleLine <= 10; visibleLine++) {
+            for(int visibleColumn = 1; visibleColumn <= 10; visibleColumn++) {
+                if("- ".equals(visibleMatris[visibleLine][visibleColumn])) {
+                    minusCount++;
+                }
+            }
+        }
+        int flagCount = 0;
+        for (int i = 0; i < 10 ; i++) {
+            if("? ".equals(visibleMatris[xAxisMine[i]][yAxisMine[i]])) {
+                flagCount++;
+            }
+        }
+        if(flagCount == 10 && minusCount == 0) {
+            mainFlag = false;
+        }
+        return mainFlag;
     }
 
     public void  setMines( int bayrak) {
@@ -59,8 +97,8 @@ public class MayınTarlası {
             }
 
             for (int i = 0; i < 10; i++) {
-                int xAxis = randomMines.nextInt(1, 9);
-                int yAxis = randomMines.nextInt(1, 9);
+                int xAxis = randomMines.nextInt(1, 10);
+                int yAxis = randomMines.nextInt(1, 10);
                 if (hiddenMatris[xAxis][yAxis] == "* ") {
                     i--;
                 }
@@ -168,19 +206,6 @@ public class MayınTarlası {
         }
     }
 
-    public boolean checkWin() {
-        int mineCount = 0;
-        boolean loseFlag = false;
-        for (int i = 0; i < 10 ; i++) {
-            if("* ".equals(hiddenMatris[yAxisMine[i]][xAxisMine[i]])) {
-                mineCount++;
-            }
-        }
-        if(mineCount != 10) {
-            loseFlag = true;
-        }
-        return loseFlag;
-    }
 
     public int checkHidden(int xAxis, int yAxis) {  //bosluksa 1 dondurur, sayiysa 2 dondurur, bomba varsa 3 dondurur.
         if ("  ".equals(hiddenMatris[xAxis][yAxis])) {
