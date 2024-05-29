@@ -1,6 +1,7 @@
 package Oyun;
 
 import javax.management.StringValueExp;
+import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -23,20 +24,18 @@ public class MayınTarlası {
         while(mainFlag) {
             showGame();
             playMove();
-            if (checkWin()) {
+            if(CheckWin()) {
+                System.out.println("************************** YOU WIN **************************");
+                break;
+            }
+            else if(checkLose()) {
                 System.out.println("************************* YOU LOSE ***************************");
                 break;
             }
         }
-        if(secondCheckWin() == false) {
-            System.out.println("************************** YOU WIN **************************");
-
-        }
-
-
     }
 
-    public boolean checkWin() {
+    public boolean checkLose() {
         int mineCount = 0;
         boolean loseFlag = false;
         for (int i = 0; i < 10 ; i++) {
@@ -49,8 +48,10 @@ public class MayınTarlası {
         }
         return loseFlag;
     }
-    public boolean secondCheckWin() {
+
+    public boolean CheckWin() {
         int minusCount = 0;
+        boolean winFlag = false;
         for(int visibleLine = 1; visibleLine <= 10; visibleLine++) {
             for(int visibleColumn = 1; visibleColumn <= 10; visibleColumn++) {
                 if("- ".equals(visibleMatris[visibleLine][visibleColumn])) {
@@ -58,19 +59,19 @@ public class MayınTarlası {
                 }
             }
         }
-        int flagCount = 0;
+        int mineCount = 0;
         for (int i = 0; i < 10 ; i++) {
-            if("? ".equals(visibleMatris[xAxisMine[i]][yAxisMine[i]])) {
-                flagCount++;
+            if("* ".equals(hiddenMatris[yAxisMine[i]][xAxisMine[i]])) {
+                mineCount++;
             }
         }
-        if(flagCount == 10 && minusCount == 0) {
-            mainFlag = false;
+        if(mineCount == 10 && minusCount == 0) {
+            winFlag = true;
         }
-        return mainFlag;
+        return winFlag;
     }
 
-    public void  setMines( int bayrak) {
+    public void  setMines(int bayrak) {
 
         Random randomMines = new Random();
 
@@ -105,13 +106,6 @@ public class MayınTarlası {
                 hiddenMatris[xAxis][yAxis] = "* ";
             }
             hiddenMatrisNumbers();
-
-            for (int i = 0; i < 10 ; i++) {
-                for (int j = 0; j < 10 ; j++) {
-                    System.out.printf(hiddenMatris[i][j]);
-                }
-                System.out.println("");
-            }
             return;
         }
         else
